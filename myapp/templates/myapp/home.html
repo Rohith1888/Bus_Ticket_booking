@@ -1,0 +1,101 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+    /* Additional CSS for the content section */
+    .container {
+        margin-top: 50px; /* Example margin-top */
+    }
+    .lead {
+        font-size: 1.2rem; /* Example font size */
+        color: #333; /* Example text color */
+    }
+    .btn {
+        border-radius: 20px; /* Example border radius for buttons */
+    }
+    .feature-title {
+        font-family: 'Montserrat', sans-serif; /* Example font family */
+        color: #555;
+        font-size: 24px;
+        margin-top: 40px;
+    }
+    .feature-description {
+        font-size: 18px;
+        color: #666;
+    }
+    .icon {
+        font-size: 3rem; /* Example font size for icons */
+        color: #666; /* Example color for icons */
+        margin-bottom: 10px; /* Example margin */
+    }
+</style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block fonts %}
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div id="busCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{% static 'path_to_bus_image_1.jpg' %}" class="d-block w-100" alt="Bus Image 1">
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'path_to_bus_image_2.jpg' %}" class="d-block w-100" alt="Bus Image 2">
+            </div>
+            <!-- Add more carousel items as needed -->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#busCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#busCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 mx-auto text-center">
+            <h1 style="margin-top:100px;">Welcome to Bus Ticket Booking</h1>
+            <p class="lead">Book bus tickets easily and securely.</p>
+            <p>This platform provides you with a convenient way to book bus tickets for your travel needs. With our user-friendly interface and secure payment system, you can find and book bus tickets hassle-free.</p>
+            <h2 class="feature-title">Key Features:</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="feature-title">Easy Booking</h3>
+                    <p class="feature-description">Find and book bus tickets with just a few clicks.</p>
+                    <i class="icon bi bi-calendar"></i> <!-- Bootstrap calendar icon -->
+                </div>
+                <div class="col-md-6">
+                    <h3 class="feature-title">Secure Payment</h3>
+                    <p class="feature-description">Your payment information is encrypted and secure.</p>
+                    <i class="icon bi bi-shield-lock"></i> <!-- Bootstrap lock icon -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 class="feature-title">Wide Range of Options</h3>
+                    <p class="feature-description">Choose from a variety of bus routes and operators.</p>
+                    <i class="icon bi bi-geo-alt"></i> <!-- Bootstrap location icon -->
+                </div>
+                <div class="col-md-6">
+                    <h3 class="feature-title">Manage Bookings</h3>
+                    <p class="feature-description">View and manage your bookings conveniently.</p>
+                    <i class="icon bi bi-card-list"></i> <!-- Bootstrap card list icon -->
+                </div>
+            </div>
+            <div class="mt-4">
+                <a href="{% url 'findbus' %}" class="btn btn-primary btn-lg mr-3">Search Buses</a>
+                <a href="{% url 'seebookings' %}" class="btn btn-success btn-lg">Manage Bookings</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

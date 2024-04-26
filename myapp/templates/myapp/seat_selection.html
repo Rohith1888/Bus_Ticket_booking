@@ -1,0 +1,64 @@
+{% extends 'myapp/base.html' %}
+{% block content %}
+<style>
+    /* CSS for form container */
+    .form-container {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 0 auto; /* Centering the form horizontally */
+        width: 50%; /* Set width of the form */
+        margin-top: 50px; /* Added margin for spacing */
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    label {
+        font-weight: bold;
+    }
+    input[type="number"] {
+        width: 100%; /* Adjust width as needed */
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        transition: border-color 0.3s ease;
+    }
+    input[type="number"]:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+    .btn-success:hover {
+        background-color: #218838;
+    }
+    .error-message {
+        color: red;
+        margin-top: 10px; /* Added margin for spacing */
+    }
+</style>
+
+<div class="form-container">
+    <h2>Seat Confirmation</h2>
+  <form action="{% url 'bookings' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="num_seats">Number of Seats:</label>
+        <input type="number" id="num_seats" name="num_seats" min="1" max="6" placeholder="Enter number of seats" required>
+    </div>
+    <!-- Pass the bus_id here as a hidden input field -->
+    <input type="hidden" name="bus_id" value="{{ bus_id }}">
+    <button type="submit" class="btn btn-success">Confirm Booking</button>
+</form>
+
+
+</div>
+
+{% endblock %}

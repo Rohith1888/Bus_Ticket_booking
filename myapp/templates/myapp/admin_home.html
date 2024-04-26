@@ -1,0 +1,24 @@
+{% extends 'myapp/admin_base.html' %}
+
+{% block content %}
+  <div class="container mt-5 admin-content">
+    <h1>Admin Dashboard</h1>
+    <p>Here you can manage different aspects of your bus reservation system, such as:</p>
+    <div class="btn-group btn-group-vertical">
+      <button type="button" class="btn btn-primary">View and Manage Bus Routes</button>
+      <button type="button" class="btn btn-primary">View and Manage Bookings</button>
+      <button type="button" class="button btn-primary">Manage User Accounts</button>
+
+    </div>
+  </div>
+{% endblock %}
+
+<style>
+  .mt-5 {  margin-top: 100px;  }  /* Margin for container */
+
+  .admin-content {  /* Styles for the content area */
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    padding: 20px;
+  }
+</style>

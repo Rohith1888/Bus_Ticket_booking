@@ -1,0 +1,103 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 mx-auto" style="margin-top: 70px">
+            <h2 style="color: #333;">Find bus</h2>
+            <form id="find-bus-form" method="post" style="background-color: #f9f9f9; padding: 20px; border-radius: 10px;">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="source" class="col-2 col-form-label" style="font-weight: bold;">From</label>
+                    <div class="col-10">
+                        <input name='source' class="form-control" type="text" id="source" placeholder="Enter origin" style="border: 1px solid #ccc; border-radius: 5px;">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="destination" class="col-2 col-form-label" style="font-weight: bold;">Destination</label>
+                    <div class="col-10">
+                        <input name='destination' class="form-control" type="text" id="destination" placeholder="Enter destination" style="border: 1px solid #ccc; border-radius: 5px;">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="date" class="col-2 col-form-label" style="font-weight: bold;">Date</label>
+                    <div class="col-10">
+                        <input name='date' class="form-control" type="date" id="date" style="border: 1px solid #ccc; border-radius: 5px;" required>
+                    </div>
+                </div>
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-success float-right" style="background-color: blue; border-color: #28a745; padding-right:40%; padding-left:40%; border-radius:10px;">Find bus</button>
+                </div>
+                {% if error %}
+                    <div id="popup-error" class="popup">
+                        <p>{{ error }}</p>
+                        <button onclick="closePopup()">Close</button>
+                    </div>
+                    <script>
+                        function closePopup() {
+                            document.getElementById('popup-error').style.display = 'none';
+                        }
+                    </script>
+                {% endif %}
+            </form>
+            <!-- Added button to redirect to the page displaying all available buses -->
+           <a href="{% url 'findbus' %}?avl" class="btn btn-primary mt-3">Available Buses</a>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('find-bus-form').addEventListener('submit', function(event) {
+        var source = document.getElementById('source').value;
+        var destination = document.getElementById('destination').value;
+
+        if (source === destination) {
+            alert('Source and destination cannot be the same.');
+            event.preventDefault(); // Prevent form submission
+        }
+    });
+</script>
+
+<style>
+    .popup {
+        position: fixed;
+        top: 50%; /* Center vertically */
+        left: 50%; /* Center horizontally */
+        transform: translate(-50%, -50%);
+        min-width: 300px;
+        background: linear-gradient(135deg, rgba(135,222,234,1) 0%, rgba(233,233,245,1) 100%);
+        color: #444;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Adds shadow for better visibility */
+        text-align: center;
+        z-index: 1001; /* ensures popup is above other content */
+        animation: slideDown 0.5s ease-out forwards;
+    }
+    .popup button {
+        margin-top: 20px; /* Spacing above the button */
+        padding: 8px 20px;
+        background-color: #f44336; /* Red button for emphasis */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer; /* Pointer cursor on hover */
+        transition: background-color 0.3s;
+    }
+    .popup button:hover {
+        background-color: #d73833; /* Slightly darker on hover */
+    }
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translate(-50%, -60%);
+        }
+        to {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+    }
+</style>
+{% endblock %}

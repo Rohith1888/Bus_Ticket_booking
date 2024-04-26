@@ -1,0 +1,41 @@
+{% extends 'myapp/base.html' %}
+{% block content %}
+
+<!-- Add Bootstrap CSS link -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Add tick icon -->
+                    <h1 class="text-success"><i class="fas fa-check-circle mr-2"></i>Thank you for signing up!</h1>
+                    <!-- Display timer -->
+                    <p class="text-muted">You will be redirected to the home page in <span id="timer">5</span> seconds.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Font Awesome CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<script>
+    // Redirect to the home page after 5 seconds
+    var countDown = 5; // Initial countdown value
+
+    var timer = setInterval(function() {
+        countDown--; // Decrement countdown value
+        document.getElementById('timer').textContent = countDown; // Update timer display
+
+        // Redirect to home page when countdown reaches 0
+        if (countDown <= 0) {
+            clearInterval(timer); // Stop the timer
+            window.location.href = "{% url 'home' %}"; // Redirect to the home page
+        }
+    }, 1000); // Update timer every 1 second (1000 milliseconds)
+</script>
+
+{% endblock %}

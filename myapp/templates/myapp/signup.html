@@ -1,0 +1,177 @@
+{% extends 'myapp/base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+    /* Your CSS styles here */
+    .background-image {
+        background-image: url("{% static 'mysite/images/Background.jpg' %}");
+        background-size: cover;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 1; /* Adjust transparency as needed */
+    }
+
+    .signup-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 40px;
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.8);
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        width: 80%;
+        max-width: 400px;
+        text-align: center;
+        color: black;
+    }
+
+    .signup-header {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        border-color: blue;
+        border-radius: 5px;
+        padding: 12px;
+        position: relative; /* Added */
+    }
+
+    .btn-success {
+        background-color: blue;
+        border-color: blue;
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-size: 18px;
+        font-weight: bold;
+
+        padding-left:100px;
+        padding-right:100px;
+    }
+
+    .btn-success:hover {
+        background-color: darkblue;
+        border-color: darkblue;
+    }
+
+    .error-message {
+        color: red;
+        margin-top: 20px;
+        font-size: 16px;
+    }
+
+    body,
+    .signup-header,
+    .form-control,
+    .btn-success {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .form-group.row {
+        margin-bottom: 20px;
+    }
+
+    .form-group.row .col-form-label {
+        text-align: right;
+    }
+
+    .form-group.row .col-3 {
+        max-width: 25%; /* Adjust width of label column */
+    }
+
+    .form-group.row .col-9 {
+        max-width: 75%; /* Adjust width of input column */
+    }
+
+    .signup-header {
+        font-size: 32px; /* Increase font size */
+        font-weight: bold; /* Make text bold */
+        color: #333; /* Change text color */
+        margin-bottom: 30px; /* Increase bottom margin */
+        text-transform: uppercase; /* Convert text to uppercase */
+    }
+
+    /* Style for the show password icon */
+    .show-password-icon {
+        cursor: pointer; /* Change cursor to pointer on hover */
+        position: absolute; /* Position the icon */
+        top: 50%; /* Align vertically */
+        right: 30px; /* Align to the right */
+        transform: translateY(-50%); /* Center vertically */
+    }
+</style>
+
+<div class="background-image"></div>
+
+<div class="signup-container col-sm-6 mx-auto">
+    <h2 class="signup-header">Sign up!</h2>
+
+    <form action="{% url 'register' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group row">
+        <label for="example-email-input" class="col-3 col-form-label">Email:</label>
+        <div class="col-9">
+            <input name='email' class="form-control" type="email" id="example-email-input" required maxlength="25">
+            <p id="email-error" class="error-message"></p> <!-- Error message container -->
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="example-email-input" class="col-3 col-form-label">Username:</label>
+        <div class="col-9">
+            <input name='name' class="form-control" type="text" required maxlength="15">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="example-email-input" class="col-3 col-form-label">Password:</label>
+        <div class="col-9">
+            <input name='password' class="form-control" type="password" required maxlength="15">
+            <span class="show-password-icon" onclick="togglePasswordVisibility()">
+                <i class="fa fa-eye"></i>
+            </span>
+        </div>
+    </div>
+    <div class="pull-right">
+        <button type="submit" class="btn btn-success">Sign up</button>
+        <p>Already have an account? <a href="{% url 'signin' %}">Sign in</a></p>
+    </div>
+</form>
+
+<script>
+    // JavaScript function to validate email domain in real-time
+    document.querySelector("input[name='email']").addEventListener("input", function() {
+        var emailInput = this.value;
+        var errorContainer = document.getElementById("email-error");
+
+        if (!emailInput.endsWith("@gmail.com")) {
+            errorContainer.textContent = "Please enter a valid email address with the domain '@gmail.com'.";
+        } else {
+            errorContainer.textContent = ""; // Clear error message if criteria are met
+        }
+    });
+
+    // Function to toggle password visibility
+    function togglePasswordVisibility() {
+        var passwordInput = document.querySelector("input[name='password']");
+        var icon = document.querySelector(".show-password-icon i");
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        } else {
+            passwordInput.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        }
+    }
+</script>
+
+{% endblock %}

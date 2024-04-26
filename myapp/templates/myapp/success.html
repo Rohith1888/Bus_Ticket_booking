@@ -1,0 +1,40 @@
+{% extends 'myapp/base.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 mx-auto" style="margin-top: 70px">
+            <div class="alert alert-success" role="alert">
+                {{ user }} successful login! {{ id }}
+            </div>
+            <div id="countdown" class="text-center mb-3"></div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    // Countdown timer function
+    function countdown() {
+        let count = 5;
+        const countdownDisplay = document.getElementById('countdown');
+        const timer = setInterval(function () {
+            count--;
+            countdownDisplay.textContent = `Redirecting in ${count} seconds...`;
+            if (count === 0) {
+                clearInterval(timer);
+                // Redirect to home after the countdown
+                setTimeout(function() {
+                    window.location.href = "{% url 'home' %}";
+                }, 1000);
+            }
+        }, 1000);
+    }
+
+    // Call the countdown function when the page loads
+    document.addEventListener('DOMContentLoaded', function () {
+        countdown();
+    });
+</script>
+
+{% endblock %}

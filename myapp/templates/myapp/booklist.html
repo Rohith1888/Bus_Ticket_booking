@@ -1,0 +1,110 @@
+{% extends 'myapp/base.html' %}
+{% block content %}
+<style>
+    /* CSS for table */
+    table {
+        width: 90%; /* Reduced width */
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        table-layout: fixed; /* Added to ensure fixed table layout */
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #007bff;
+        color: white;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    /* CSS for form */
+    form {
+        margin-top: 20px;
+        background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 90%; /* Reduced width */
+        margin: 0 auto;
+        text-align: center; /* Aligning the form at the center */
+    }
+    label {
+        font-weight: bold;
+    }
+    input[type="number"], input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        transition: border-color 0.3s ease;
+    }
+    input[type="number"]:focus, input[type="text"]:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+</style>
+
+<h3>{{msg}}</h3>
+<h2>List of buses</h2>
+<div class="table-container">
+    <table class="table table-striped">
+        <thead style="background-color: blue;color: white;">
+            <tr>
+                <th>BOOKING ID</th>
+                <th>USER NAME</th>
+                <th>BUS NAME</th>
+                <th>SOURCE</th>
+                <th>DESTINATION</th>
+                <th>NUM OF SEATS</th>
+                <th>PRICE</th>
+                <th>DATE</th>
+                <th>TIME</th>
+                <th>STATUS</th>
+                <th>Action</th> <!-- Add a new column for the action button -->
+            </tr>
+        </thead>
+        {% for row in book_list %}
+        <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.name }}</td>
+            <td>{{ row.bus_name }}</td>
+            <td>{{ row.source }}</td>
+            <td>{{ row.dest }}</td>
+            <td>{{ row.nos }}</td>
+            <td>{{ row.price }}</td>
+            <td>{{ row.date }}</td>
+            <td>{{ row.time }}</td>
+            <td>{{ row.status }}</td>
+            <td> <!-- Add a new column for the action button -->
+                {% if row.status != 'CANCELLED' %}
+                <form action="{% url 'cancellings' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="bus_id" id="bus_id" value="{{ row.id }}"> <!-- Hidden input for booking_id -->
+                    <button type="submit" class="btn btn-danger">Cancel</button> <!-- Cancel button -->
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+
+
+
+{% endblock %}
